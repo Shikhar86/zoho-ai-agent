@@ -1,0 +1,7 @@
+Delhi Weather
+
+Temperature: 34°C
+
+Condition: Sunny
+
+Humidity: 42%
