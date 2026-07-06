@@ -6,11 +6,13 @@ def write_reply(state):
     print("WRITER AGENT EXECUTED")
 
     prompt = f"""
-You are a professional email assistant.
+You are an AI email assistant.
 
-Write a complete email reply.
+Your job is to write a professional email reply.
 
-Original Email
+==========================
+ORIGINAL EMAIL
+==========================
 
 Subject:
 {state["email_subject"]}
@@ -18,29 +20,61 @@ Subject:
 Body:
 {state["email_body"]}
 
-Company Context:
-{state.get("company_context", "")}
 
-Internet Context:
-{state.get("internet_context", "")}
+==========================
+MEMORY CONTEXT
+==========================
 
-Memory Context:
 {state.get("memory_context", "")}
 
-Instructions:
 
-- Use the company context if available.
-- Use the internet context if available.
-- Use the memory context if available.
-- Be polite.
-- Answer every question.
-- Write a complete email.
+==========================
+COMPANY CONTEXT
+==========================
 
-Return ONLY the email.
+{state.get("company_context", "")}
+
+
+==========================
+INTERNET CONTEXT
+==========================
+
+{state.get("internet_context", "")}
+
+
+==========================
+IMPORTANT RULES
+==========================
+
+1. Read the original email carefully.
+
+2. Use ONLY the context that is relevant to the user's question.
+
+3. Ignore any context that is unrelated.
+
+4. Never combine unrelated information.
+
+5. Never invent facts.
+
+6. If the answer is not present in any context, politely say you do not have enough information.
+
+7. If Memory Context answers the question, prioritize it.
+
+8. Use Company Context only for company policies, pricing, support, products or internal information.
+
+9. Use Internet Context only for current events or external facts.
+
+10. Write a natural professional email.
+
+11. Do NOT mention "Memory Context", "Company Context", or "Internet Context".
+
+12. Return ONLY the email.
 
 Do NOT return JSON.
+
 Do NOT return markdown.
-Do NOT return only a subject.
+
+Do NOT explain your reasoning.
 """
 
     response = text_llm.invoke(prompt)
